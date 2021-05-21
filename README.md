@@ -12,48 +12,35 @@ The data downlaoded from data_download scripy is in .tif format. Currently, no l
 
 # Unet Model
 
-===================================================================================================================
+Unet is an image segmentation model which does a pixel level classification of image.
+Original paper can be found here: https://arxiv.org/abs/1505.04597
 
-Final Script of Model:
-
-This python script is a machine learning program which learns to detect mining site present on a satallite image using sample images and predicts mining site present on any satallite image.
+unet.py script describes couple of UNet segmentation models. The script though is targeted to work on segmenting satellite images, it can be used for any type of segmentation.
 
 Input:
-It takes satallite images in tif formate. It takes the corresponding masks of each image to verify and validate its prediction.
-
-We are giving 170 satallite images and their corresponding masks as input further we are augmenting it internally to increase the number of images for learning.
+Satellite images are taken in "npy" format and the corresponding masks are taken in ".png" format by default (can be changed as per requirement)
+No arguments are taken while running the scripts.
+Path to the folder containing satellite images and masks are needed to be set in the script only.
 
 Defined functions in Script:
 augment_data():
 	randomly changing the orientation of input images to increase training images.
 
-Convolution_layers: - down_block, upblock bottleneck
+Convolution_layers: - down_block, up_block, bottleneck
 	for down samping and upsampling.
 
 Performance calculating functions: - jaccard_distance, weighted_binary_crossentropy, iou_score, mean_iou
 	for calculation of accuracy and loss incured by the trained model.
 
 Unet():
-	Unet architecture is implemented for 7 down and 7 up layers to train the model.
+	Unet architecture is implemented for 7 down and 7 up layers to train the model. 
+	Originally described here: https://github.com/nikhilroxtomar/UNet-Segmentation-in-Keras-TensorFlow
+
 
 Unetv2():
-	Unet architecture is implemented for higher number of down and up layers for alternate approach. 
+	Unet architecture inspired by https://deepsense.ai/deep-learning-for-satellite-imagery-via-image-segmentation/.
 
-
-Working of Script:
-Initially, libraries are imported and training and validation images are loaded in different lists in numpy array formate.
-
-Masks are also loaded in different list each for training and validation dateset in numpy array formate.
-
-Next, defined Unet() function is assigned to a variable named model and then is complied with following parameters:
-
-optimizer="Adamax", loss=['binary_crossentropy'], metrics=[iou_score,mean_iou]
-
-Checkpoint is created and stored in a directory for saving learning model at different stages to counter any exceptional failure in the middle of the execution in future.
-
-Next, model is trained on the list of training images and their corresponding masks in batch size of 8 and for 600 epochs.
-
-At last from saved checkpoints best model is retrieved and evaluated for testing the accuracy of the final model.
+Model described in Unet() seems to work better than the one in Unetv2() 
 
 Output of Script:
-	It will give us a best model trained on input images which can be used for prediction of mining areas in a satallite images. This model will predict the mining area with accuracy shown by the best model saved in the checkpoint.
+	Saves the best model(default: best in terms of lowest val_loss) in ".h5" format.
