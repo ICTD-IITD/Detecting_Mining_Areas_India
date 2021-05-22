@@ -27,25 +27,19 @@ Satellite images are taken in "npy" format and the corresponding masks are taken
 No arguments are taken while running the scripts.
 Path to the folder containing satellite images and masks are needed to be set in the script only.
 
-Defined functions in Script:
-augment_data():
-	randomly changing the orientation of input images to increase training images.
 
-Convolution_layers: - down_block, up_block, bottleneck
-	for down samping and upsampling.
+Output:
+Saves the best model(default: best in terms of lowest val_loss) in ".h5" format.
 
-Performance calculating functions: - jaccard_distance, weighted_binary_crossentropy, iou_score, mean_iou
-	for calculation of accuracy and loss incured by the trained model.
+Given script contains 2 models of Unet:
 
 Unet():
-	Unet architecture is implemented for 7 down and 7 up layers to train the model. 
+	This model contains 7 down and 7 up blocks and a bottleneck layer. 
 	Originally described here: https://github.com/nikhilroxtomar/UNet-Segmentation-in-Keras-TensorFlow
 
 
 Unetv2():
-	Unet architecture inspired by https://deepsense.ai/deep-learning-for-satellite-imagery-via-image-segmentation/.
+	This Unet model was inspired by https://deepsense.ai/deep-learning-for-satellite-imagery-via-image-segmentation/.
 
 Model described in Unet() seems to work better than the one in Unetv2() 
 
-Output of Script:
-	Saves the best model(default: best in terms of lowest val_loss) in ".h5" format.

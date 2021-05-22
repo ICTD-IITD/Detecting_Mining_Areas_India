@@ -211,24 +211,23 @@ def Unet():
     inputs = keras.layers.Input((SIZE_Y, SIZE_X, num_channels))
     
     p0 = inputs
-    c1, p1 = down_block(p0, f[0]) #128 -> 64
-    c2, p2 = down_block(p1, f[1]) #64 -> 32
-    c3, p3 = down_block(p2, f[2]) #32 -> 16
-    c4, p4 = down_block(p3, f[3]) #16->8
-    c5, p5 = down_block(p4, f[4]) #16->8
-    c6, p6 = down_block(p5, f[5]) #16->8
-    c7, p7 = down_block(p6, f[6]) #16->8
-
+    c1, p1 = down_block(p0, f[0]) 
+    c2, p2 = down_block(p1, f[1]) 
+    c3, p3 = down_block(p2, f[2]) 
+    c4, p4 = down_block(p3, f[3]) 
+    c5, p5 = down_block(p4, f[4]) 
+    c6, p6 = down_block(p5, f[5]) 
+    c7, p7 = down_block(p6, f[6]) 
     
     bn = bottleneck(p7, f[7])
     
-    u1 = up_block(bn, c7, f[6]) #8 -> 16
-    u2 = up_block(u1, c6, f[5]) #8 -> 16
-    u3 = up_block(u2, c5, f[4]) #8 -> 16
-    u4 = up_block(u3, c4, f[3]) #16 -> 32
-    u5 = up_block(u4, c3, f[2]) #32 -> 64
-    u6 = up_block(u5, c2, f[1]) #64 -> 128
-    u7 = up_block(u6, c1, f[0]) #64 -> 128
+    u1 = up_block(bn, c7, f[6]) 
+    u2 = up_block(u1, c6, f[5]) 
+    u3 = up_block(u2, c5, f[4])
+    u4 = up_block(u3, c4, f[3])
+    u5 = up_block(u4, c3, f[2])
+    u6 = up_block(u5, c2, f[1])
+    u7 = up_block(u6, c1, f[0])
     
     outputs = keras.layers.Conv2D(1, (1, 1), padding="same", activation="sigmoid")(u7)
     model = keras.models.Model(inputs, outputs)
