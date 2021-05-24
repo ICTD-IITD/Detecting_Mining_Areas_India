@@ -15,7 +15,7 @@ Paper from which data is taken: https://www.nature.com/articles/s41597-020-00624
 
 The data downlaoded from data_download script is in .tif format. Currently, no libraries are available on HPC which can read .tif files, thus before training the segmentation model .tif files are converted to .npy format. _conversion.py_ can be used for this purpose.
 
-_conversion.py_ also changes the shape of image from *num_channels* x *size_x* x *size_y* to *size_x* x *size_y* x *num_channels*, to make it compatible for cv2 operations.
+_conversion.py_ also changes the shape of image from *num_channels* x *size_x* x *size_y* ==> *size_x* x *size_y* x *num_channels*, to make it compatible for cv2 operations.
 
 # Unet Model
 
